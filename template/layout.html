@@ -123,30 +123,36 @@ $code:
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" rel="tipsy" href="/"  ><img src="/static/img/logo.png" style="width: 25px"></img>&nbsp;&nbsp;Welcome to My Upload Center!</a>
-                    <!--<form class="navbar-search pull-right" data-bind="submit: search.addDish">-->
-                        <!--<input id="search-dish" type="text" class="search-query" data-provide="typeahead" data-bind="搜索文件" rel="tooltip" data-placement="left" data-trigger="manual" data-original-title="再次回车加入订单" placeholder="Search">-->
-                    <!--</form>-->
+                    <a class="brand" rel="tipsy" href="/"  ><img src="/static/img/logo.png" style="width: 25px"></img>&nbsp;Offline Deals for FileCoin</a>
+
                 </div>
             </div>
         </div>
-        <!--导航条结束-->
 
-        <!--文件列表-->
         <div class="container">
+            <div>
+                <h4> Upload data to Filecoin.. Push or Pull </h4>
+                <p>
+                    Filecoin support both push and pull model. With push model, enduser uses Lotus or third-party tool <br/>
+                    such as Powergate to query for available miners, negotiate and eventually transfer data which is main problem <br/>
+                    when the data size is large (>2GiB). <br/>
+                    With pull-model, or offline transfer, end-user can negotiate to storage providers to transfer the files, <br/>
+                    once the files are done, then make deals and import files, which then resolve the problem of transfering data. <br/><br/>
+                    More info about offline deals can be found <a href="https://docs.filecoin.io/store/lotus/very-large-files/#deals-with-offline-data-transfer">here</a>
+                    <br/>
+                    <h4>Steps to make offline deals</h4>
+                - Miners downloads the files <br/>
+                - Miners inform end-users about download done and their miners ID <br/>
+                - End-user make the deals based on miner's price (client query-ask miner-id) <br/>
+                - End-user sends to miners a CSV file contains files and its correspond dealsCID
+                - Miners import manual with command (lotus-miner storage-deals import-data [dealCid] [full_filePath]) <br/>
+                  or using the provided python script.<br/>
+                - If using the provided python script, the command is:<br/>
+                python import_deals.py -i /[full_path]/deal_[miner_id].csv -f [full_path_folder_car_files] <br/>
+                
+                </p>
+            </div>
             <div class="row-fluid">
-                <form id="upload" action="/" method="POST" enctype="multipart/form-data" target="ifm">
-                    <fieldset>
-                        <legend>File Upload:</legend>
-                        <div>
-                            <input type="file" id="fileselect" name="file" / title="choose a file" onchange="this.form.submit();">
-                            <div id="filedrag">or drop the file here</div>
-                        </div>
-                    </fieldset>
-                </form>
-		<div id="upload_progress" class="progress progress-striped active" style="display:none">
-                        <div id="upload_progress_bar" class="bar"></div>
-                </div>
                 <table class="table table-hover menu">
                     <thead>
                         <tr bgcolor="#333333">
@@ -161,29 +167,10 @@ $code:
                         <tr><td><img src="$icon[item['type']]" style="width: 40px"></img><a href="/$item["encode"]">$item["name"]</td>
                             <td>$item["size"]</td>
                             <td>$item["time"]</td>
-                            <td><a title="Delete" name="$item["name"]" onclick="delete_file(this)" href="#"><img src="/static/img/bin.png" ></img></a></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!--文件列表结束-->
-		
-		<!--Footer-->
-        <footer class="footer">
-            <div class="container-fluid">
-                <p><font color="gray">
-                Designed and built by  
-                <a href="http://i.orzace.com">Ace</a></br>
-                Powerd by 
-                <a href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a>
-                , and 
-                <a href="http://webpy.org">web.py</a></br>
-                in memory of
-                <a href="http://www.aaronsw.com/">Aaron H. Swartz</a></br></br></font>
-            </p>
-            </div>
-        </footer>
-		<!--Footer结束-->
         <script type="text/javascript" src="/static/js/filedrag.js"></script>
 	</body>
 </html>
